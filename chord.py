@@ -23,7 +23,7 @@ class ChordNode:
         self.successor = None
         self.predecessor = None
 
-        # finger table megethous m
+        # finger table size m
         self.finger = [None] * m
 
     def __repr__(self):
@@ -65,7 +65,7 @@ class ChordRing:
         hops = 0
         curr = start_node
 
-        # trivial case: 1 node
+        # 1 node case
         if curr.successor is None:
             return curr, hops
 
@@ -83,7 +83,7 @@ class ChordRing:
             hops += 1
 
             if hops > max_steps:
-                # fallback: linear scan (should not happen in normal use)
+                # linear scan 
                 return self.find_successor_linear(key), hops
 
         return curr.successor, hops
@@ -161,7 +161,7 @@ class ChordRing:
         """
         join_hops = 0
 
-        # routing cost to find where the node would attach (before insertion)
+        # routing cost to find where the node would attach before insertion
         if self.nodes:
             _, h = self.find_successor(node_id, start_node=start_node or self.nodes[0])
             join_hops += h
@@ -197,7 +197,6 @@ class ChordRing:
                 # count routing cost as if successor forwards request in overlay
                 _, hops = self.find_successor(key_int, start_node=succ)
                 total_hops += hops
-
                 new_node.btree.insert(record, key_int)
                 succ.btree.delete(key_int)
                 moved += 1
