@@ -5,7 +5,7 @@ class BPlusTreeNode:
     def __init__(self, size):
         self.is_leaf = False
         self.values = []      # keys
-        self.keys = []        # leaf: record lists ; internal: child pointers
+        self.keys = []        # leaf
         self.parent = None
         self.Next = None
         self.size = size      # max number of keys
@@ -113,9 +113,7 @@ class BPlusTree:
 
         self.insert_in_parent(node, promoted, new_internal)
 
-    # -------------------------
-    # SEARCHING BY TITLE (SHA-1)
-    # -------------------------
+    # searching by title ------- SHA-1
     def search_title(self, title):
         sha_key = int(hashlib.sha1(title.encode('utf-8')).hexdigest(), 16)
         return self.search_key(sha_key)
@@ -143,12 +141,12 @@ class BPlusTree:
     def get_all_items(self):
         items = []
 
-        # πήγαινε στο αριστερότερο leaf
+        # go to most left leaf
         curr = self.root
         while not curr.is_leaf:
             curr = curr.keys[0]
 
-    # διάσχιση leaf nodes
+    # cross leaf nodes
         while curr:
             for i, key_val in enumerate(curr.values):
                 for record in curr.keys[i]:
