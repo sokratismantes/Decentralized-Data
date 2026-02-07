@@ -17,13 +17,12 @@ def _parse_list_field(val):
             return parsed
         return [str(parsed)]
     except Exception:
-        # fallback: keep as single string
         return [str(val)]
 
 
 def load_and_preprocess_csv(
     file_path: str,
-    max_rows: int = 50_000,
+    max_rows: int = 946_460,
     seed: int = 1,
 ) -> pd.DataFrame:
     """
@@ -37,7 +36,7 @@ def load_and_preprocess_csv(
     df = pd.read_csv(file_path)
     print(f"[INFO] Raw rows: {len(df)}")
 
-    # Keep up to max_rows (random sample -> more representative than head())
+    # Keep up to max_rows 
     if len(df) > max_rows:
         df = df.sample(n=max_rows, random_state=seed).reset_index(drop=True)
 
@@ -50,7 +49,7 @@ def load_and_preprocess_csv(
     if "release_date" in df.columns:
         df["release_date"] = pd.to_datetime(df["release_date"], errors="coerce")
 
-    # Parse list-like fields into list columns (optional, but useful)
+    # Parse list-like fields into list columns 
     if "origin_country" in df.columns:
         df["origin_country_parsed"] = df["origin_country"].apply(_parse_list_field)
 
