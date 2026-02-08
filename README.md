@@ -10,9 +10,6 @@
 
 ---
 
-### Python
-- Python 3.x (προτείνεται 3.9+)
-
 ### Βιβλιοθήκες (pip)
 - `pandas` (φόρτωση CSV)
 - `matplotlib` (plots) 
