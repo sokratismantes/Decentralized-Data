@@ -46,12 +46,14 @@ def main():
     leaves_n = 10
 
     ring = ChordRing(m=40)
-
     # -------- initial nodes with random unique IDs --------
     N0 = num_nodes
     space = 2 ** ring.m
-    random.seed(42)
-    node_ids = random.sample(range(space), k=num_nodes)
+    max_hash = 2**40 - 1
+    num_nodes = 32
+
+# katanomh twn nodes
+    node_ids = [(i * max_hash) // num_nodes for i in range(1, num_nodes + 1)]
 
     print("=== Joining initial Chord nodes ===")
     join_hops_list = []
@@ -268,3 +270,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
