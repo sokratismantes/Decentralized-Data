@@ -63,9 +63,11 @@ def main():
     # -------- initial nodes - random unique IDs --------
     N0 = num_nodes
     space = 2 ** ring.m
-    random.seed(42)
-    node_ids = random.sample(range(space), k=num_nodes)
+    max_hash = 2**40 - 1
+    num_nodes = 32
 
+# katanomh twn nodes
+    node_ids = [(i * max_hash) // num_nodes for i in range(1, num_nodes + 1)]
     print("=== Joining initial Pastry nodes ===")
     join_hops_list = []
     moved_list = []
@@ -222,3 +224,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
